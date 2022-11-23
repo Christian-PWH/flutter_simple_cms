@@ -3,20 +3,21 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_cms/api/parse_services.dart';
+import 'package:flutter_simple_cms/screens/home_screen.dart';
 import 'package:flutter_simple_cms/utilities/constants.dart';
 import 'package:flutter_simple_cms/widgets/show_drawer.dart';
 import 'package:flutter_simple_cms/widgets/show_snackbar.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as path;
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
 
   @override
-  State<CreatePost> createState() => _CreatePostState();
+  State<CreatePost> createState() => CreatePostState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class CreatePostState extends State<CreatePost> {
   final titleFieldKey = GlobalKey<FormState>();
   final contentFieldKey = GlobalKey<FormState>();
   final TextEditingController postContentCtl = TextEditingController();
@@ -32,10 +33,19 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Create Post')),
-      body: _body(context),
-      drawer: showDrawer(context),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Create Post')),
+        body: _body(context),
+        drawer: showDrawer(context),
+      ),
     );
   }
 
@@ -131,7 +141,7 @@ class _CreatePostState extends State<CreatePost> {
               if (value != null) {
                 setState(() {
                   postImageCover = File(value.path);
-                  postImageCoverName = basename(value.path);
+                  postImageCoverName = path.basename(value.path);
                 });
               }
             });
@@ -215,7 +225,7 @@ class _CreatePostState extends State<CreatePost> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const CreatePost()));
+                                builder: (context) => const HomeScreen()));
                       } else {
                         setState(() => isLoading = false);
                         showSnackbar(

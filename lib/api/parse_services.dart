@@ -6,36 +6,65 @@ class ParseService {
   Future<ParseResponse> createPost(
       File? postImageCover, String? postTitle, String? postContent) async {
     ParseObject createPost;
+
     if (postImageCover != null) {
       ParseFileBase? parseFile = ParseFile(postImageCover);
 
-      parseFile.save().then((value) {
-        createPost = ParseObject('PostList')
-          ..set('postImageCover', parseFile)
-          ..set('postTitle', postTitle)
-          ..set('postContent', postContent);
+      await parseFile.save();
 
-        return createPost.save();
-      });
+      createPost = ParseObject('PostList')
+        ..set('postImageCover', parseFile)
+        ..set('postTitle', postTitle)
+        ..set('postContent', postContent);
+      return createPost.save();
+    } else {
+      createPost = ParseObject('PostList')
+        ..set('postTitle', postTitle)
+        ..set('postContent', postContent);
+
+      return createPost.save();
     }
-    createPost = ParseObject('PostList')
-      ..set('postTitle', postTitle)
-      ..set('postContent', postContent);
-
-    return createPost.save();
-    ;
   }
 
-  Future<List<ParseObject>> getPosts() async {
-    await Future.delayed(Duration(seconds: 2), () {});
-    return [];
+  Stream<List<ParseObject>> getPosts() async* {
+    QueryBuilder<ParseObject> queryPosts =
+        QueryBuilder<ParseObject>(ParseObject('PostList'));
+    final ParseResponse apiResponse = await queryPosts.query();
+
+    if (apiResponse.success && apiResponse.results != null) {
+      yield apiResponse.results as List<ParseObject>;
+    } else {
+      yield [];
+    }
   }
 
-  Future<void> updatePost(String id, bool done) async {
-    await Future.delayed(Duration(seconds: 1), () {});
+  Future<ParseResponse> updatePost(String? id, File? postImageCover,
+      String? postTitle, String? postContent) async {
+    ParseObject updatePost;
+
+    if (postImageCover != null) {
+      ParseFileBase? parseFile = ParseFile(postImageCover);
+
+      await parseFile.save();
+
+      updatePost = ParseObject('PostList')
+        ..objectId = id
+        ..set('postImageCover', parseFile)
+        ..set('postTitle', postTitle)
+        ..set('postContent', postContent);
+      return updatePost.save();
+    } else {
+      updatePost = ParseObject('PostList')
+        ..objectId = id
+        ..set('postTitle', postTitle)
+        ..set('postContent', postContent);
+
+      return updatePost.save();
+    }
   }
 
-  Future<void> deletePost(String id) async {
-    await Future.delayed(Duration(seconds: 1), () {});
+  Future<ParseResponse> deletePost(String? id) async {
+    ParseObject deletePost = ParseObject('PostList')..objectId = id;
+    return deletePost.delete();
   }
 }
