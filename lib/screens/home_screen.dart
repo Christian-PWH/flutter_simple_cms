@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             postTitle,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 16.0),
+                            style: const TextStyle(fontSize: 20.0),
                           ),
                           addSpace(10.0),
                           Text(
