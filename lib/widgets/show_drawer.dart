@@ -4,6 +4,7 @@ import 'package:flutter_simple_cms/screens/home_screen.dart';
 
 Widget showDrawer(BuildContext context) {
   return Container(
+    alignment: Alignment.center,
     padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
     color: Colors.white,
     width: MediaQuery.of(context).size.width / 1.5,
