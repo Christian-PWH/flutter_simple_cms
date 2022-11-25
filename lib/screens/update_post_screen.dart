@@ -41,8 +41,8 @@ class UpdatePostState extends State<UpdatePost> {
     super.initState();
     postObject = widget.postObject;
     postImageCover = postObject?.get<ParseFile>('postImageCover');
-    postTitleCtl.text = postObject!.get<String>('postTitle')!;
-    postContentCtl.text = postObject!.get<String>('postContent')!;
+    postTitle = postTitleCtl.text = postObject!.get<String>('postTitle')!;
+    postContent = postContentCtl.text = postObject!.get<String>('postContent')!;
   }
 
   @override
