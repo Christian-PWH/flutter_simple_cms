@@ -26,9 +26,10 @@ class ParseService {
     }
   }
 
-  Stream<List<ParseObject>> getPosts() async* {
+  Stream<List<ParseObject>>? getPosts() async* {
+    ParseObject? getPostObject = ParseObject('PostList');
     QueryBuilder<ParseObject> queryPosts =
-        QueryBuilder<ParseObject>(ParseObject('PostList'));
+        QueryBuilder<ParseObject>(getPostObject);
     final ParseResponse apiResponse = await queryPosts.query();
 
     if (apiResponse.success && apiResponse.results != null) {

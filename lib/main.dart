@@ -5,7 +5,9 @@ import 'package:flutter_simple_cms/screens/home_screen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   ApiServices().initialize().then((value) {
-    runApp(const MyApp());
+    if (value.hasParseBeenInitialized()) {
+      runApp(const MyApp());
+    }
   });
 }
 

@@ -7,8 +7,8 @@ class ApiServices {
   final String keyParseServerUrl = "https://parseapi.back4app.com/";
   // final String contentType = "application/json";
 
-  Future<void> initialize() async {
-    Parse().initialize(
+  Future<Parse> initialize() async {
+    return Parse().initialize(
       keyApplicationId,
       keyParseServerUrl,
       debug: true,
