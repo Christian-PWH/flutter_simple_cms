@@ -9,7 +9,7 @@
     <img src="https://github.com/Christian-PWH/flutter_simple_cms/blob/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Simple Game Collection</h3>
+<h3 align="center">Simple CMS</h3>
 
   <p align="center">
     This flutter project just a sample project that i created for the purpose of portfolio and not for commercial use.
